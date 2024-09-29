@@ -46,23 +46,37 @@ The solutions are written in **Java**. Each solution file follows a clean, under
 
 ### Example
 ```java
-// Problem: Two Sum
-// Given an array of integers, return indices of the two numbers such that they add up to a specific target.
-
-import java.util.HashMap;
-import java.util.Map;
-
-public class Solution {
-    public int[] twoSum(int[] nums, int target) {
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < nums.length; i++) {
-            int complement = target - nums[i];
-            if (map.containsKey(complement)) {
-                return new int[] { map.get(complement), i };
-            }
-            map.put(nums[i], i);
+// Problem: Merge Sorted Arrays
+// You are given two integer arrays nums1 and nums2, sorted in non-decreasing order,
+// and two integers m and n, representing the number of elements in nums1 and nums2 respectively.
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int pt1 = 0, pt2 = 0;
+        int[] num_temp = new int[n + m];
+        for (int i = 0; i < n + m; i++) {
+            num_temp[i] = nums1[i];
         }
-        throw new IllegalArgumentException("No two sum solution");
+        for (int i = 0; i < n + m; i++) {
+            if (pt1 == m) {
+                nums1[i] = nums2[pt2];
+                pt2++;
+                continue;
+            }
+            if (pt2 == n) {
+                nums1[i] = num_temp[pt1];
+                pt1++;
+                continue;
+            }
+
+            if (num_temp[pt1] < nums2[pt2]) {
+                nums1[i] = num_temp[pt1];
+                pt1++;
+            } else {
+                nums1[i] = nums2[pt2];
+                pt2++;
+            }
+        }
+
     }
 }
 ```
